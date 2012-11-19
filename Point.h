@@ -2,6 +2,7 @@
 #define __POINT__
 
 #include <stdlib.h>
+#include <math.h>
 #include <iostream>
 using namespace std;
 #include "GlobalVariable.h"

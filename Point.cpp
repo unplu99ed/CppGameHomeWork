@@ -23,12 +23,14 @@ int Point::getY() const {
 }
 
 int Point::comper(Point p2) {
-	if (m_x==p2.m_x && m_y==p2.m_y )
-		return 0;
-	else if (m_x <= p2.m_x && m_y<=p2.m_y )
-		return -1;
-	else 
-		return 1;
+	int result = (int)sqrt( pow((double)m_x-(double)p2.m_x,2) + pow((double)m_y-(double)p2.m_y,2));
+	return result;
+	//if (m_x==p2.m_x && m_y==p2.m_y )
+	//	return 0;
+	//else if (m_x <= p2.m_x && m_y<=p2.m_y )
+	//	return -1;
+	//else 
+	//	return 1;
 }
 
 

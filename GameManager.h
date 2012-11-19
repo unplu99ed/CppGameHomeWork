@@ -28,7 +28,7 @@ class GameManager {
 	int numOfPlayers,alivePlayers;
 	GameManager(const GameManager&);
 
-	static const int SLEEPING_TIME = 150;
+	static const int SLEEPING_TIME = 10;
 
 
 public :
@@ -42,6 +42,8 @@ public :
 	Point GetEmptyPosition();
 	void SetMapObject(const Point& position,GlobalConsts::MapObjectType type);
 	GlobalConsts::MapObjectType GetMapObject(const Point& position) const;
+	GlobalConsts::MapObjectType GameManager::TakeMapObject(const Point& position);
+	bool isCloseToPlayers(const Point&);
 
 };
 

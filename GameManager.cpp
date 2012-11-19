@@ -73,6 +73,7 @@ GameManager::GameManager(char* path) {
 
 			Sleep(SLEEPING_TIME);
 		}
+		
 		if (alivePlayers <= 1) {
 			con=false;
 		}
@@ -110,17 +111,29 @@ void GameManager::deleteObj(GameObj* arrow){
 }
 
 bool GameManager::isValidPosition(const Point& position) {
+	
 	if (matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Wall ||
-		matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Legened )
-		return false;
+		matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Legened ) {
+			return false;
+	}
+	else {
+		return true;
+	}
+}
 
-	return true;
+bool GameManager::isCloseToPlayers(const Point& position) {
+	for(int i=0; i < numOfPlayers; ++i) {
+		if (playerArr[i] != NULL && playerArr[i]->GetPosition().comper(position) <= 2 )
+			return true;
+	}
+
+	return false;
 }
 
 Point GameManager::GetEmptyPosition() {
 	Point result;
 
-	while(!isValidPosition(result)) {
+	while( !isValidPosition(result) || isCloseToPlayers(result) ) {
 		result.generateNewPosition();
 	}
 
@@ -134,6 +147,12 @@ void GameManager::SetMapObject(const Point& position,GlobalConsts::MapObjectType
 
 GlobalConsts::MapObjectType GameManager::GetMapObject(const Point& position) const {
 	return matrix[position.getY()][position.getX()];
+}
+
+GlobalConsts::MapObjectType GameManager::TakeMapObject(const Point& position) {
+	GlobalConsts::MapObjectType result = GetMapObject(position);
+	matrix[position.getY()][position.getX()] = GlobalConsts::MapObjectType::Empty;
+	return result;
 }
 
 GameManager::~GameManager(){

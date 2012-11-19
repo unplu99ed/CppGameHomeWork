@@ -40,7 +40,7 @@ void GamePlayer::Move(GameManager* mgr) {
 		Draw(mgr);
 
 		if (mgr->GetMapObject(p) != GlobalConsts::MapObjectType::Empty) {
-			switch(mgr->GetMapObject(p)) {
+			switch(mgr->TakeMapObject(p)) {
 			case GlobalConsts::MapObjectType::Food:
 				break;
 			case GlobalConsts::MapObjectType::Quiver:
