@@ -3,8 +3,8 @@
 
 class GlobalConsts {
 public:
-	static const int MAX_LENGHT= 79;
-	static const int MAX_WIDHT= 24;
+	static const int MAX_WIDTH= 79;
+	static const int MAX_HEIGHT= 24;
 	enum MapObjectType {
 		Empty,
 		Wall,
@@ -16,3 +16,4 @@ public:
 
 };
 #endif
+

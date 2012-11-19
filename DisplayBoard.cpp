@@ -21,9 +21,9 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 	reader.open(m_filePath);
 	int i,j;
 
-	for(i=0;i <GlobalConsts::MAX_WIDHT; ++i) {
+	for(i=0;i <GlobalConsts::MAX_HEIGHT; ++i) {
 
-		for(j=0;j<GlobalConsts::MAX_LENGHT; ++j) {
+		for(j=0;j<GlobalConsts::MAX_WIDTH; ++j) {
 			char ch = reader.get();
 
 			while (ch == '\r' || ch == '\n'){
@@ -65,7 +65,7 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 
 void DisplayBoard::LegendToMatrix(const Point& position,GameManager* mgr){
 	int i,j;
-	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_WIDHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_LENGHT))
+	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_HEIGHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_WIDTH))
 		legendPosition.set(67,17);
 	for(i=0;i<12;i++){
 		mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()),GlobalConsts::MapObjectType::Wall);
@@ -97,7 +97,7 @@ void DisplayBoard::LegendToMatrix(const Point& position,GameManager* mgr){
 
 void DisplayBoard::displayLegend(int n,GamePlayer** playerArr ) {
 	int i;
-	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_WIDHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_LENGHT))
+	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_HEIGHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_WIDTH))
 		legendPosition.set(67,17);
 	for(i=0;i<n;i++){
 		gotoxy(legendPosition.getX()+1,legendPosition.getY()+i+1);
@@ -118,8 +118,8 @@ void DisplayBoard::displayLegend(int n,GamePlayer** playerArr ) {
 }
 
 void DisplayBoard::printBoard(const GameManager* mgr){
-	for(int i=0;i <GlobalConsts::MAX_WIDHT; ++i) {
-		for(int j=0;j<GlobalConsts::MAX_LENGHT; ++j) {
+	for(int i=0;i <GlobalConsts::MAX_HEIGHT; ++i) {
+		for(int j=0;j<GlobalConsts::MAX_WIDTH; ++j) {
 			gotoxy(j,i);
 			switch(mgr->GetMapObject(Point(j,i))) {
 			case GlobalConsts::MapObjectType::Wall:

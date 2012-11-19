@@ -8,8 +8,7 @@ void GameArrow::Move(GameManager* mgr) {
 	Undraw();
 	Point p = GetPosition();
 	p.set(p.getX()+m_direction.getX(),p.getY()+m_direction.getY());
-	int x=p.getX(),y=p.getY(); //Debugging
-	if ( ( p.getX() >= 0 && p.getX() <=  GlobalConsts::MAX_LENGHT )  && ( p.getY() >= 0 && p.getY() <= GlobalConsts::MAX_WIDHT ) && mgr->isValidPosition(p)) {
+	if ( ( p.getX() >= 0 && p.getX() <=  GlobalConsts::MAX_WIDTH )  && ( p.getY() >= 0 && p.getY() <= GlobalConsts::MAX_HEIGHT ) && mgr->isValidPosition(p)) {
 		SetPosition(p);
 		Draw(mgr);
 	}

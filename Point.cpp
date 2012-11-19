@@ -2,7 +2,7 @@
 
 Point::Point(int x,int y) : m_x(x),m_y(y) {}
 
-Point::Point() : m_x(rand() % (GlobalConsts::MAX_LENGHT - 1) + 1),m_y(rand() % (GlobalConsts::MAX_WIDHT - 1) + 1) {}
+Point::Point() : m_x(rand() % (GlobalConsts::MAX_WIDTH - 1) + 1),m_y(rand() % (GlobalConsts::MAX_HEIGHT - 1) + 1) {}
 
 Point::Point(const Point& p){
 	this->m_x = p.getX();
@@ -33,6 +33,6 @@ int Point::comper(Point p2) {
 
 
 void Point::generateNewPosition(){
-	 m_x=rand() % (GlobalConsts::MAX_LENGHT - 1) + 1;
-	 m_y=rand() % (GlobalConsts::MAX_WIDHT - 1) + 1;
+	 m_x=rand() % (GlobalConsts::MAX_WIDTH - 1) + 1;
+	 m_y=rand() % (GlobalConsts::MAX_HEIGHT - 1) + 1;
 }

@@ -21,7 +21,7 @@ using namespace std;
 
 class GameManager {
 	
-	GlobalConsts::MapObjectType matrix[GlobalConsts::MAX_WIDHT][GlobalConsts::MAX_LENGHT];
+	GlobalConsts::MapObjectType matrix[GlobalConsts::MAX_HEIGHT][GlobalConsts::MAX_WIDTH];
 	vector<GameObj*> objects;
 	queue<GameObj*> addObj,delObj;
 	GamePlayer** playerArr;

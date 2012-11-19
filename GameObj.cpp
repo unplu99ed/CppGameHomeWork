@@ -31,7 +31,6 @@ void GameObj::Draw(GameManager* mgr) {
 
 
 void GameObj::Undraw() {
-	int x=M_MyPos.getX(),y=M_MyPos.getY(); //Debugging
 	gotoxy(M_MyPos.getX(),M_MyPos.getY());
 	cout << ' ' ;
 }
@@ -47,14 +46,14 @@ GameObjClassType GameObj::ClassType() {
 
 void GameObj::fixPoint(Point& p) {
 
-	if ( p.getX() == GlobalConsts::MAX_LENGHT + 1)
+	if ( p.getX() == GlobalConsts::MAX_WIDTH + 1)
 		p.set(0,p.getY());
 	else if (p.getX() == -1)
-		p.set(GlobalConsts::MAX_LENGHT,p.getY());
+		p.set(GlobalConsts::MAX_WIDTH,p.getY());
 
-	if ( p.getY() == GlobalConsts::MAX_WIDHT + 1 )
+	if ( p.getY() == GlobalConsts::MAX_HEIGHT + 1 )
 		p.set(p.getX(),0);
 	else if (p.getY() == -1)
-		p.set(p.getX(), GlobalConsts::MAX_WIDHT);
+		p.set(p.getX(), GlobalConsts::MAX_HEIGHT);
 
 }

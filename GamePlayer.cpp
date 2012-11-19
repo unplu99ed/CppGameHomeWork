@@ -3,7 +3,7 @@
 
 void GamePlayer::initBaseValues() {
 	m_power=1000;
-	m_numOfArrows=99;
+	m_numOfArrows=0;
 	m_pauseMoveRounds=0;
 	m_pauseArrowsRounds=0;
 	m_direction.set(1,1);
@@ -34,7 +34,7 @@ void GamePlayer::Move(GameManager* mgr) {
 			if ( mgr->isValidPosition(p) && GetPosition().comper(p) != 0 ) 
 				move=false;
 		}
-
+		int x=p.getX();
 		SetPosition(p);
 		m_pauseMoveRounds=1;
 		Draw(mgr);
@@ -77,18 +77,46 @@ int GamePlayer::getNumberOfArrows(){
 
 void GamePlayer::announceDamage(GameObj* obj,GameManager* mgr) {
 	if ( obj->ClassType() == GameObjClassType::typeGamePlayer ) {
-		m_power -= 100;
+		GamePlayer* otherPlayer = (GamePlayer*)obj;
+		if (otherPlayer->getPower() == getPower()) {
+			otherPlayer->HitByPlayer(HIT_BY_PLAYER_POWER::Same,mgr);
+			HitByPlayer(HIT_BY_PLAYER_POWER::Same,mgr);
+		}
+		else if (otherPlayer->getPower() < getPower()) {
+			otherPlayer->HitByPlayer(HIT_BY_PLAYER_POWER::Higher,mgr);
+			HitByPlayer(HIT_BY_PLAYER_POWER::Lower,mgr);
+		}
+		else {
+			otherPlayer->HitByPlayer(HIT_BY_PLAYER_POWER::Lower,mgr);
+			HitByPlayer(HIT_BY_PLAYER_POWER::Higher,mgr);
+		}
 	}
 	else if ( obj->ClassType() == GameObjClassType::typeGameArrow ) {
 		m_power -= 500;
-		mgr->deleteObj(obj);
-	}
-
-	if (m_power <= 0) {
-		mgr->deleteObj(this);
+		if (m_power <= 0) {
+			mgr->deleteObj(this);
+		}
 	}
 }
 
 GameObjClassType GamePlayer::ClassType() {
 	return GameObjClassType::typeGamePlayer;
+}
+
+void GamePlayer::HitByPlayer(GamePlayer::HIT_BY_PLAYER_POWER otherPlayer,GameManager* mgr) {
+	switch (otherPlayer) {
+	case HIT_BY_PLAYER_POWER::Lower :
+		m_power -= HIT_BY_PLAYER_POWER::Lower;
+		break;
+	case HIT_BY_PLAYER_POWER::Same :
+		m_power -= HIT_BY_PLAYER_POWER::Same;
+		break;
+	case HIT_BY_PLAYER_POWER::Higher :
+		m_power -= HIT_BY_PLAYER_POWER::Higher;
+		break;
+	}
+
+	if (m_power <= 0) {
+		mgr->deleteObj(this);
+	}
 }
