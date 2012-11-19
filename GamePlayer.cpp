@@ -23,7 +23,6 @@ void GamePlayer::Move(GameManager* mgr) {
 		p = GetPosition();
 		p.set(p.getX()+m_direction.getX(),p.getY()+m_direction.getY());
 		fixPoint(p);
-		int y = p.getY();
 		bool move=!mgr->isValidPosition(p);
 
 		while (move) {
@@ -38,7 +37,7 @@ void GamePlayer::Move(GameManager* mgr) {
 
 		SetPosition(p);
 		m_pauseMoveRounds=1;
-		Draw();
+		Draw(mgr);
 
 		if (mgr->GetMapObject(p) != GlobalConsts::MapObjectType::Empty) {
 			switch(mgr->GetMapObject(p)) {
@@ -82,8 +81,7 @@ void GamePlayer::announceDamage(GameObj* obj,GameManager* mgr) {
 	}
 	else if ( obj->ClassType() == GameObjClassType::typeGameArrow ) {
 		m_power -= 500;
-	}
-	else {
+		mgr->deleteObj(obj);
 	}
 
 	if (m_power <= 0) {

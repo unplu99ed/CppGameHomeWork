@@ -25,11 +25,9 @@ public:
 	void LegendToMatrix(const Point& position,GameManager* mgr);
 	void loadMap(GameManager* mgr);
 	void printBoard(const GameManager* mgr);
-	//bool isValidPosition(const Point);
 	GlobalConsts::MapObjectType CastToMapObjectType(char ch);
 	void displayLegend(int,GamePlayer**);
 	void printObject(const Point& position,GlobalConsts::MapObjectType obj);
-
 };
 
 #endif

@@ -33,7 +33,7 @@ public:
 		typeGameArrow,
 		typeGamePlayer
 	};
-	void Draw();
+	void Draw(GameManager* mgr);
 	void Undraw();
 	virtual void Move(GameManager* mgr) = 0;
 	virtual void SetPosition(Point pos);

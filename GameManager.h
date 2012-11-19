@@ -26,8 +26,9 @@ class GameManager {
 	queue<GameObj*> addObj,delObj;
 	GamePlayer** playerArr;
 	int numOfPlayers,alivePlayers;
-
 	GameManager(const GameManager&);
+
+	static const int SLEEPING_TIME = 150;
 
 
 public :

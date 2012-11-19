@@ -41,6 +41,7 @@ GameManager::GameManager(char* path) {
 								}
 							}
 						}
+						obj->Undraw();
 						objects.erase(it);
 						delete obj;
 						break;
@@ -48,29 +49,29 @@ GameManager::GameManager(char* path) {
 				}
 			}
 
-			if(rand()%10 == 0) {
-				Point place = GetEmptyPosition();
-				matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Food;
-				board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Food);
-			}
+			//if(rand()%10 == 0) {
+			//	Point place = GetEmptyPosition();
+			//	matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Food;
+			//	board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Food);
+			//}
 
-			if(rand()%5 == 0) {
-				Point place = GetEmptyPosition();
-				matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Quiver;
-				board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Quiver);
-			}
+			//if(rand()%5 == 0) {
+			//	Point place = GetEmptyPosition();
+			//	matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Quiver;
+			//	board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Quiver);
+			//}
 
-			if(rand()%20 == 0) {
-				Point place = GetEmptyPosition();
-				matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Bomb;
-				board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Bomb);
-			}
+			//if(rand()%20 == 0) {
+			//	Point place = GetEmptyPosition();
+			//	matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Bomb;
+			//	board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Bomb);
+			//}
 
 			for(int i=0; i<this->numOfPlayers; ++i) {
 				Collisions(playerArr[i]);
 			}
 
-			Sleep(100);
+			Sleep(SLEEPING_TIME);
 		}
 		if (alivePlayers <= 1) {
 			con=false;

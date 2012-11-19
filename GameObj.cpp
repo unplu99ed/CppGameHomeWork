@@ -1,34 +1,37 @@
 #include "GameObj.h"
 #include "GlobalVariable.h"
+#include "GameManager.h"
 
 GameObj::GameObj() : SIMBOL_OF_OBJECT('@') {
-	this->Draw();
+	//this->Draw();
 }
 
 GameObj::GameObj(char symbol) : SIMBOL_OF_OBJECT(symbol) { 
-	this->Draw();
+	//this->Draw();
 }
 
 GameObj::GameObj(Point position,char simbol) : M_MyPos(position), SIMBOL_OF_OBJECT(simbol) { 
-	this->Draw();
+	//this->Draw();
 }
 
 GameObj::GameObj(int x, int y ,char simbol) : M_MyPos(x,y), SIMBOL_OF_OBJECT(simbol) { 
-	this->Draw();
+	//this->Draw();
 }
 
 Point GameObj::GetPosition() { 
 	return M_MyPos; 
 }
 
-void GameObj::Draw() { 
-
-	gotoxy(M_MyPos.getX(),M_MyPos.getY());
-	cout << SIMBOL_OF_OBJECT ;
+void GameObj::Draw(GameManager* mgr) { 
+	if ( mgr->isValidPosition(M_MyPos) ) {
+		gotoxy(M_MyPos.getX(),M_MyPos.getY());
+		cout << SIMBOL_OF_OBJECT ;
+	}
 }
 
 
 void GameObj::Undraw() {
+	int x=M_MyPos.getX(),y=M_MyPos.getY(); //Debugging
 	gotoxy(M_MyPos.getX(),M_MyPos.getY());
 	cout << ' ' ;
 }
