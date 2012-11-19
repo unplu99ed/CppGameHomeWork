@@ -60,11 +60,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DisplayBoard.cpp" />
+    <ClCompile Include="GameArrow.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObj.cpp" />
+    <ClCompile Include="GamePlayer.cpp" />
     <ClCompile Include="Gotoxy.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DisplayBoard.h" />
+    <ClInclude Include="GameArrow.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObj.h" />
+    <ClInclude Include="GamePlayer.h" />
+    <ClInclude Include="GlobalVariable.h" />
     <ClInclude Include="Gotoxy.h" />
+    <ClInclude Include="Point.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="map.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

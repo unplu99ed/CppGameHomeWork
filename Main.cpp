@@ -1,9 +1,6 @@
+#include "GameManager.h"
 
-#include <iostream>
-using namespace std;
 
-#include "Gotoxy.h"
-
-void main(char** argv,int argc) {
-	cout << "*";
+void main(int argc,char** argv) {
+	GameManager g(argv[1]);
 }
