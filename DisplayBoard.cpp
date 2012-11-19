@@ -5,7 +5,7 @@ DisplayBoard::DisplayBoard(char* path) : legendPosition(-1,-1) {
 	m_filePath = path;
 }
 
-GlobalConsts::MapObjectType CastToMapObjectType(char ch) {
+GlobalConsts::MapObjectType DisplayBoard::CastToMapObjectType(char ch) {
 	switch(ch) {
 	case 'W':
 		return GlobalConsts::MapObjectType::Wall;
@@ -63,7 +63,7 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 	gotoxy(0,0);
 }
 
-void DisplayBoard::LegendToMatrix(Point position,GameManager* mgr){
+void DisplayBoard::LegendToMatrix(const Point& position,GameManager* mgr){
 	int i,j;
 	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_WIDHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_LENGHT))
 		legendPosition.set(67,17);
@@ -117,7 +117,7 @@ void DisplayBoard::displayLegend(int n,GamePlayer** playerArr ) {
 
 }
 
-void DisplayBoard::printBoard(GameManager* mgr){
+void DisplayBoard::printBoard(const GameManager* mgr){
 	for(int i=0;i <GlobalConsts::MAX_WIDHT; ++i) {
 		for(int j=0;j<GlobalConsts::MAX_LENGHT; ++j) {
 			gotoxy(j,i);

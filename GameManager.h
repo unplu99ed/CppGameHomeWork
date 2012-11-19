@@ -20,22 +20,27 @@ using namespace std;
 
 
 class GameManager {
+	
 	GlobalConsts::MapObjectType matrix[GlobalConsts::MAX_WIDHT][GlobalConsts::MAX_LENGHT];
 	vector<GameObj*> objects;
 	queue<GameObj*> addObj,delObj;
 	GamePlayer** playerArr;
-	int numOfPlayers;
+	int numOfPlayers,alivePlayers;
+
+	GameManager(const GameManager&);
+
 
 public :
 	GameManager(char*);
-	void createPlayer(Point);
-	void createArrow(Point,Point);
+	~GameManager();
+	void createPlayer(const Point&);
+	void createArrow(const Point&,const Point&);
 	void deleteObj(GameObj*);
-	bool isValidPosition(Point);
+	bool isValidPosition(const Point&);
 	void Collisions(GamePlayer*);
 	Point GetEmptyPosition();
-	void SetMapObject(Point position,GlobalConsts::MapObjectType type);
-	GlobalConsts::MapObjectType GetMapObject(Point position);
+	void SetMapObject(const Point& position,GlobalConsts::MapObjectType type);
+	GlobalConsts::MapObjectType GetMapObject(const Point& position) const;
 
 };
 

@@ -4,7 +4,7 @@ GameManager::GameManager(char* path) {
 
 	DisplayBoard board(path);
 	board.loadMap(this);
-	numOfPlayers = objects.size();
+	alivePlayers = numOfPlayers = objects.size();
 	playerArr = new GamePlayer*[numOfPlayers];
 	int i=0;
 	for(vector<GameObj*>::iterator it = objects.begin(); it < objects.end(); it++){
@@ -14,7 +14,7 @@ GameManager::GameManager(char* path) {
 	bool con = true;
 	while(con) {
 
-		while(!kbhit() || getch()!=27) {
+		while( (!kbhit() || getch()!=27) && alivePlayers > 1) {
 
 			board.displayLegend(numOfPlayers,playerArr);
 
@@ -37,6 +37,7 @@ GameManager::GameManager(char* path) {
 							for(int i = 0; i < numOfPlayers; ++i) {
 								if (playerArr[i] == obj) {
 									playerArr[i] = NULL;
+									--alivePlayers;
 								}
 							}
 						}
@@ -71,14 +72,19 @@ GameManager::GameManager(char* path) {
 
 			Sleep(100);
 		}
-		clrscr();
-		gotoxy(10,10);
-		cout << "Do you want to leave the game ?" << endl;
-		char ch = cin.get();
-		if (ch == 'y')
+		if (alivePlayers <= 1) {
 			con=false;
+		}
+		else {
+			clrscr();
+			gotoxy(10,10);
+			cout << "Do you want to leave the game ?" << endl;
+			char ch = cin.get();
+			if (ch == 'y')
+				con=false;
 
-		board.printBoard(this);
+			board.printBoard(this);
+		}
 	}
 }
 
@@ -90,11 +96,11 @@ void GameManager::Collisions(GamePlayer* player) {
 	}
 }
 
-void GameManager::createPlayer(Point position) {
+void GameManager::createPlayer(const Point& position) {
 	objects.push_back(new GamePlayer(position));
 }
 
-void GameManager::createArrow(Point position,Point direction) { 
+void GameManager::createArrow(const Point& position,const Point& direction) { 
 	addObj.push(new GameArrow(position,direction));
 }
 
@@ -102,7 +108,7 @@ void GameManager::deleteObj(GameObj* arrow){
 	delObj.push(arrow);
 }
 
-bool GameManager::isValidPosition(Point position) {
+bool GameManager::isValidPosition(const Point& position) {
 	if (matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Wall ||
 		matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Legened )
 		return false;
@@ -121,10 +127,27 @@ Point GameManager::GetEmptyPosition() {
 }
 
 
-void GameManager::SetMapObject(Point position,GlobalConsts::MapObjectType type) {
+void GameManager::SetMapObject(const Point& position,GlobalConsts::MapObjectType type) {
 	matrix[position.getY()][position.getX()] = type;
 }
 
-GlobalConsts::MapObjectType GameManager::GetMapObject(Point position){
+GlobalConsts::MapObjectType GameManager::GetMapObject(const Point& position) const {
 	return matrix[position.getY()][position.getX()];
+}
+
+GameManager::~GameManager(){
+	objects.clear(); //run items destructors.
+	//playerArr - copy elements from Object vector
+
+	while (!addObj.empty()) {
+		GameObj* item = addObj.front();
+		addObj.pop();
+		delete item;
+	}
+
+	while (!delObj.empty()) {
+		GameObj* item = delObj.front();
+		delObj.pop();
+		delete item;
+	}
 }

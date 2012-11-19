@@ -22,10 +22,11 @@ class DisplayBoard {
 
 public:
 	DisplayBoard(char*);
-	void LegendToMatrix(Point position,GameManager* mgr);
+	void LegendToMatrix(const Point& position,GameManager* mgr);
 	void loadMap(GameManager* mgr);
-	void printBoard(GameManager* mgr);
-	bool isValidPosition(Point);
+	void printBoard(const GameManager* mgr);
+	//bool isValidPosition(const Point);
+	GlobalConsts::MapObjectType CastToMapObjectType(char ch);
 	void displayLegend(int,GamePlayer**);
 	void printObject(const Point& position,GlobalConsts::MapObjectType obj);
 

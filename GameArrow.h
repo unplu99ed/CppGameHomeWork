@@ -8,8 +8,8 @@ class GameArrow : public GameObj  {
 public:
 	
 	//Constractors
-	GameArrow(Point position,Point direction);
-	GameArrow(int x,int y,Point direction);
+	GameArrow(Point position,const Point& direction);
+	GameArrow(int x,int y,const Point& direction);
 	
 	void Move(GameManager* mgr);
 	virtual GameObjClassType ClassType();
