@@ -51,12 +51,7 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 			else if (ch == 'w' || ch == 'W') {
 				cout << (char)178;
 			}
-			/*else {
-			cout << matrix[i][j] ;
-			}*/
 		}
-
-
 	}
 	reader.close();
 	LegendToMatrix(legendPosition,mgr);
@@ -67,49 +62,56 @@ void DisplayBoard::LegendToMatrix(const Point& position,GameManager* mgr){
 	int i,j;
 	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_HEIGHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_WIDTH))
 		legendPosition.set(67,17);
-	for(i=0;i<12;i++){
+
+	for(i=0;i<12;i++){ //Print Walls around the legend
 		mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()),GlobalConsts::MapObjectType::Wall);
 		mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()+6),GlobalConsts::MapObjectType::Wall);
 	}
-	for(i=1;i<6;i++){
+
+	for(i=1;i<6;i++){ //Print Walls around the legend
 		mgr->SetMapObject(Point(legendPosition.getX(),legendPosition.getY()+i),GlobalConsts::MapObjectType::Wall);
 		mgr->SetMapObject(Point(legendPosition.getX()+11,legendPosition.getY()+i),GlobalConsts::MapObjectType::Wall);
 	}
-	for(i=1;i<11;i++) {
+
+	for(i=1;i<11;i++) { //set legend place on the matrix
 		for(j=1;j<6;j++) {
 			mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()+j),GlobalConsts::MapObjectType::Legened);
 		}
 	}
 
 	gotoxy(legendPosition.getX(),legendPosition.getY());
-	cout<<"wwwwwwwwwwww";
+	for(i=0;i<12;i++)
+		cout<<EnemToChar(GlobalConsts::Wall);
 	for(i=1;i<6;i++){
 		gotoxy(legendPosition.getX(),legendPosition.getY()+i);
-		cout<<'w';
+		cout<<EnemToChar(GlobalConsts::Wall);
 		gotoxy(legendPosition.getX()+11,legendPosition.getY()+i);
-		cout<<'w';
+		cout<<EnemToChar(GlobalConsts::Wall);
 	}
 	gotoxy(legendPosition.getX(),legendPosition.getY()+6);
-	cout<<"wwwwwwwwwwww";
+	for(i=0;i<12;i++)
+		cout<<EnemToChar(GlobalConsts::Wall);
 
 }
 
 
 void DisplayBoard::displayLegend(int n,GamePlayer** playerArr ) {
-	int i;
+
 	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_HEIGHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_WIDTH))
 		legendPosition.set(67,17);
-	for(i=0;i<n;i++){
+
+	for(int i=0;i<n;i++){
 		gotoxy(legendPosition.getX()+1,legendPosition.getY()+i+1);
 		if (playerArr[i] != NULL) {
-			cout <<" " << i+1 << " " <<  playerArr[i]->getPower()
-				<< " " <<  playerArr[i]->getNumberOfArrows()  ;
+			cout <<" " << i+1 << " " <<setw(4)<< playerArr[i]->getPower()
+				<< " " << setw(2)<< playerArr[i]->getNumberOfArrows()  ;
 		}
 		else {
 			cout <<" " << i+1 << " ---- --";
 		}
 	}
-	for(i=n+1;i<=5;i++){
+
+	for(int i=n+1;i<=5;i++){
 
 		gotoxy(legendPosition.getX()+1,legendPosition.getY()+i);
 		cout<<" -------- ";
@@ -120,7 +122,9 @@ void DisplayBoard::displayLegend(int n,GamePlayer** playerArr ) {
 void DisplayBoard::printBoard(const GameManager* mgr){
 	for(int i=0;i <GlobalConsts::MAX_HEIGHT; ++i) {
 		for(int j=0;j<GlobalConsts::MAX_WIDTH; ++j) {
+
 			gotoxy(j,i);
+
 			switch(mgr->GetMapObject(Point(j,i))) {
 			case GlobalConsts::MapObjectType::Wall:
 				cout << (char)178;
@@ -132,6 +136,7 @@ void DisplayBoard::printBoard(const GameManager* mgr){
 				cout << mgr->GetMapObject(Point(j,i));
 				break; 
 			}
+
 		}
 	}
 }
@@ -139,5 +144,26 @@ void DisplayBoard::printBoard(const GameManager* mgr){
 
 void DisplayBoard::printObject(const Point& position,GlobalConsts::MapObjectType obj){
 	gotoxy(position.getX(),position.getY());
-	cout << obj;
+	cout <<EnemToChar(obj) ;
+}
+
+char DisplayBoard:: EnemToChar(int ToReturn)
+{
+	switch(ToReturn){
+	case GlobalConsts::Empty :
+		return ' ';
+		break;
+	case GlobalConsts::Wall :
+		return (char)178;
+		break;
+	case GlobalConsts::Bomb:
+		return (char)15;
+		break;
+	case GlobalConsts::Food :
+		return (char)3 ;
+		break;
+	case GlobalConsts::Quiver :
+		return (char)27 ;
+		break;
+	}
 }

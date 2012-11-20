@@ -40,11 +40,12 @@ public :
 	bool isValidPosition(const Point&);
 	void Collisions(GamePlayer*);
 	Point GetEmptyPosition();
-	void SetMapObject(const Point& position,GlobalConsts::MapObjectType type);
-	GlobalConsts::MapObjectType GetMapObject(const Point& position) const;
-	GlobalConsts::MapObjectType GameManager::TakeMapObject(const Point& position);
+	void SetMapObject(const Point&, GlobalConsts::MapObjectType);
+	GlobalConsts::MapObjectType GetMapObject(const Point&) const;
+	GlobalConsts::MapObjectType TakeMapObject(const Point&);
 	bool isCloseToPlayers(const Point&);
-	void GameManager::CreateGift(GlobalConsts::MapObjectType type);
+	void CreateGift(GlobalConsts::MapObjectType);
+	void DisplayMapObject(const Point&);
 
 };
 

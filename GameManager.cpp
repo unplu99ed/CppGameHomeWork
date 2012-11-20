@@ -139,6 +139,11 @@ void GameManager::SetMapObject(const Point& position,GlobalConsts::MapObjectType
 	matrix[position.getY()][position.getX()] = type;
 }
 
+void GameManager::DisplayMapObject(const Point& position) {
+	board.printObject(position,matrix[position.getY()][position.getX()]);
+}
+
+
 GlobalConsts::MapObjectType GameManager::GetMapObject(const Point& position) const {
 	return matrix[position.getY()][position.getX()];
 }

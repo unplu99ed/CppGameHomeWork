@@ -5,14 +5,13 @@
 
 class GameArrow : public GameObj  {
 	Point m_direction;
-	static const char ARROW_SYMBOL = '-';
+	static const char ARROW_SYMBOL = (char)29;
 public:
 	
 	//Constractors
-	GameArrow(Point position,const Point& direction);
-	GameArrow(int x,int y,const Point& direction);
-	
-	void Move(GameManager* mgr);
+	GameArrow(const Point&, const Point&);
+	GameArrow(int, int, const Point&);
+	void Move(GameManager*);
 	virtual GameObjClassType ClassType();
 };
 

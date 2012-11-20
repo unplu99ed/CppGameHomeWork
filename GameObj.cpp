@@ -2,9 +2,9 @@
 #include "GlobalVariable.h"
 #include "GameManager.h"
 
-GameObj::GameObj() : SIMBOL_OF_OBJECT('@') {
-	//this->Draw();
-}
+/*GameObj::GameObj() : SIMBOL_OF_OBJECT((char) 1) {
+	this->Draw();
+}*/
 
 GameObj::GameObj(char symbol) : SIMBOL_OF_OBJECT(symbol) { 
 	//this->Draw();

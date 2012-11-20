@@ -10,6 +10,10 @@ using namespace std;
 #include "GlobalVariable.h"
 #include "Gotoxy.h"
 #include "Point.h"
+#include <iomanip>
+
+using namespace std;
+
 
 class GameManager;
 class GamePlayer;
@@ -20,12 +24,13 @@ class DisplayBoard {
 
 public:
 	DisplayBoard(char*);
-	void LegendToMatrix(const Point& position,GameManager* mgr);
-	void loadMap(GameManager* mgr);
-	void printBoard(const GameManager* mgr);
-	GlobalConsts::MapObjectType CastToMapObjectType(char ch);
+	void LegendToMatrix(const Point&,GameManager*);
+	void loadMap(GameManager*);
+	void printBoard(const GameManager*);
+	GlobalConsts::MapObjectType CastToMapObjectType(char);
 	void displayLegend(int,GamePlayer**);
-	void printObject(const Point& position,GlobalConsts::MapObjectType obj);
+	void printObject(const Point& position,GlobalConsts::MapObjectType);
+	char EnemToChar(int);
 };
 
 #endif
