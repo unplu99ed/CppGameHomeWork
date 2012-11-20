@@ -2,16 +2,16 @@
 #include "GameManager.h"
 
 void GamePlayer::initBaseValues() {
-	m_power=1000;
-	m_numOfArrows=0;
+	m_power=START_POWER;
+	m_numOfArrows=NUMBER_OF_ARROWS;
 	m_pauseMoveRounds=0;
 	m_pauseArrowsRounds=0;
 	m_direction.set(1,1);
 }
-GamePlayer::GamePlayer(Point position): GameObj(position,232) {
+GamePlayer::GamePlayer(Point position): GameObj(position,PLAYER_SYMBOL) {
 	initBaseValues();
 }
-GamePlayer::GamePlayer(int x,int y):GameObj(x,y,232) {
+GamePlayer::GamePlayer(int x,int y):GameObj(x,y,PLAYER_SYMBOL) {
 	initBaseValues();
 }
 
@@ -36,7 +36,7 @@ void GamePlayer::Move(GameManager* mgr) {
 		}
 		int x=p.getX();
 		SetPosition(p);
-		m_pauseMoveRounds=1;
+		m_pauseMoveRounds=PAUSE_MOVE_AFTER_MOVE;
 		Draw(mgr);
 
 		if (mgr->GetMapObject(p) != GlobalConsts::MapObjectType::Empty) {
@@ -48,7 +48,6 @@ void GamePlayer::Move(GameManager* mgr) {
 			case GlobalConsts::MapObjectType::Bomb:
 				break;
 			}
-			//לסדר את עניין המתנות
 		}
 
 		if (m_pauseArrowsRounds == 0 && m_numOfArrows > 0 )
@@ -56,7 +55,7 @@ void GamePlayer::Move(GameManager* mgr) {
 			Point arrowPosition(GetPosition());
 			arrowPosition.set(arrowPosition.getX() + m_direction.getX(),arrowPosition.getY() + m_direction.getY());
 			mgr->createArrow(GetPosition(),m_direction);
-			m_pauseArrowsRounds = 3;
+			m_pauseArrowsRounds = PAUSE_ARROWS_AFTER_SHOOT;
 			m_numOfArrows--;
 		}
 		else {

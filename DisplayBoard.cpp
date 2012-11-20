@@ -1,5 +1,5 @@
 #include "DisplayBoard.h"
-
+#include "GameManager.h"
 
 DisplayBoard::DisplayBoard(char* path) : legendPosition(-1,-1) {
 	m_filePath = path;

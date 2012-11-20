@@ -1,8 +1,8 @@
 #include "GameManager.h"
+#include "DisplayBoard.h"
 
-GameManager::GameManager(char* path) {
+GameManager::GameManager(char* path) : board(path) {
 
-	DisplayBoard board(path);
 	board.loadMap(this);
 	alivePlayers = numOfPlayers = objects.size();
 	playerArr = new GamePlayer*[numOfPlayers];
@@ -50,21 +50,15 @@ GameManager::GameManager(char* path) {
 			}
 
 			if(rand()%10 == 0) {
-				Point place = GetEmptyPosition();
-				matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Food;
-				board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Food);
+				CreateGift(GlobalConsts::MapObjectType::Food);
 			}
 
 			if(rand()%5 == 0) {
-				Point place = GetEmptyPosition();
-				matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Quiver;
-				board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Quiver);
+				CreateGift(GlobalConsts::MapObjectType::Quiver);
 			}
 
 			if(rand()%20 == 0) {
-				Point place = GetEmptyPosition();
-				matrix[place.getY()][place.getX()]=GlobalConsts::MapObjectType::Bomb;
-				board.printObject(Point(place.getX(),place.getY()),GlobalConsts::MapObjectType::Bomb);
+				CreateGift(GlobalConsts::MapObjectType::Bomb);
 			}
 
 			for(int i=0; i < numOfPlayers; ++i) {
@@ -73,7 +67,7 @@ GameManager::GameManager(char* path) {
 
 			Sleep(SLEEPING_TIME);
 		}
-		
+
 		if (alivePlayers <= 1) {
 			con=false;
 		}
@@ -81,8 +75,8 @@ GameManager::GameManager(char* path) {
 			clrscr();
 			gotoxy(10,10);
 			cout << "Do you want to leave the game ?" << endl;
-			char ch = cin.get();
-			if (ch == 'y')
+			char ch = getch();
+			if (ch == 'y' || ch == 'Y' )
 				con=false;
 
 			board.printBoard(this);
@@ -111,7 +105,7 @@ void GameManager::deleteObj(GameObj* arrow){
 }
 
 bool GameManager::isValidPosition(const Point& position) {
-	
+
 	if (matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Wall ||
 		matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Legened ) {
 			return false;
@@ -157,7 +151,9 @@ GlobalConsts::MapObjectType GameManager::TakeMapObject(const Point& position) {
 
 GameManager::~GameManager(){
 	objects.clear(); //run items destructors.
-	//playerArr - copy elements from Object vector
+	
+	delete playerArr; //playerArr - copy elements from Object vector, don't need to trigger elements destructors.
+	
 
 	while (!addObj.empty()) {
 		GameObj* item = addObj.front();
@@ -170,4 +166,10 @@ GameManager::~GameManager(){
 		delObj.pop();
 		delete item;
 	}
+}
+
+void GameManager::CreateGift(GlobalConsts::MapObjectType type) {
+	Point place = GetEmptyPosition();
+	matrix[place.getY()][place.getX()]=type;
+	board.printObject(Point(place.getX(),place.getY()),type);
 }

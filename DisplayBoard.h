@@ -6,12 +6,10 @@
 using namespace std;
 #include <fstream>
 
-#include "GameManager.h"
 #include "GamePlayer.h"
 #include "GlobalVariable.h"
 #include "Gotoxy.h"
 #include "Point.h"
-
 
 class GameManager;
 class GamePlayer;

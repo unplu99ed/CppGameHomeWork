@@ -12,15 +12,15 @@ using namespace std;
 #include "GlobalVariable.h"
 #include "Point.h"
 #include "Gotoxy.h"
-#include "DisplayBoard.h"
 #include "GameObj.h"
 #include "GamePlayer.h"
 #include "GameArrow.h"
 #include "GlobalVariable.h"
-
+#include "DisplayBoard.h"
 
 class GameManager {
 	
+	DisplayBoard board;
 	GlobalConsts::MapObjectType matrix[GlobalConsts::MAX_HEIGHT][GlobalConsts::MAX_WIDTH];
 	vector<GameObj*> objects;
 	queue<GameObj*> addObj,delObj;
@@ -28,7 +28,7 @@ class GameManager {
 	int numOfPlayers,alivePlayers;
 	GameManager(const GameManager&);
 
-	static const int SLEEPING_TIME = 10;
+	static const int SLEEPING_TIME = 50;
 
 
 public :
@@ -44,6 +44,7 @@ public :
 	GlobalConsts::MapObjectType GetMapObject(const Point& position) const;
 	GlobalConsts::MapObjectType GameManager::TakeMapObject(const Point& position);
 	bool isCloseToPlayers(const Point&);
+	void GameManager::CreateGift(GlobalConsts::MapObjectType type);
 
 };
 
