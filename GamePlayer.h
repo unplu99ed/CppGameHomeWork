@@ -9,9 +9,13 @@ class GamePlayer : public GameObj  {
 	int m_pauseMoveRounds,m_pauseArrowsRounds;
 	void initBaseValues();
 
+	static const int LOSE_POWER=750;
+	static const int ADD_ARROWS=3;
+	static const int ADD_POWER=200;
 	//******** initiate values ******
+
 	static const int START_POWER=1000;
-	static const int NUMBER_OF_ARROWS=150;
+	static const int NUMBER_OF_ARROWS=99;
 	static const int PAUSE_MOVE_AFTER_MOVE=1;
 	static const int PAUSE_ARROWS_AFTER_SHOOT=3;
 	static const char PLAYER_SYMBOL = 232;
@@ -32,6 +36,7 @@ public:
 	void announceDamage(GameObj* obj,GameManager* mgr);
 	virtual GameObjClassType ClassType();
 	void HitByPlayer(GamePlayer::HIT_BY_PLAYER_POWER,GameManager* mgr);
+	void HandleDeath(GameManager*);
 
 	
 };

@@ -46,14 +46,14 @@ GameObjClassType GameObj::ClassType() {
 
 void GameObj::fixPoint(Point& p) {
 
-	if ( p.getX() == GlobalConsts::MAX_WIDTH + 1)
+	if ( p.getX() == GlobalConsts::MAX_WIDTH)
 		p.set(0,p.getY());
 	else if (p.getX() == -1)
-		p.set(GlobalConsts::MAX_WIDTH,p.getY());
+		p.set(GlobalConsts::MAX_WIDTH - 1,p.getY());
 
-	if ( p.getY() == GlobalConsts::MAX_HEIGHT + 1 )
+	if ( p.getY() == GlobalConsts::MAX_HEIGHT)
 		p.set(p.getX(),0);
 	else if (p.getY() == -1)
-		p.set(p.getX(), GlobalConsts::MAX_HEIGHT);
+		p.set(p.getX(), GlobalConsts::MAX_HEIGHT - 1);
 
 }

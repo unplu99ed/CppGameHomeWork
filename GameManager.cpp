@@ -4,7 +4,7 @@
 GameManager::GameManager(char* path) : board(path) {
 
 	board.loadMap(this);
-	alivePlayers = numOfPlayers = objects.size();
+	numOfPlayers = alivePlayers = objects.size();
 	playerArr = new GamePlayer*[numOfPlayers];
 	int i=0;
 	for(vector<GameObj*>::iterator it = objects.begin(); it < objects.end(); it++){
@@ -82,6 +82,18 @@ GameManager::GameManager(char* path) : board(path) {
 			board.printBoard(this);
 		}
 	}
+	if (alivePlayers <= 1) {
+		int WinPlayerNumber=-1;
+		for(int i=0; i< numOfPlayers; ++i) {
+			if ( playerArr[i] != NULL )
+				WinPlayerNumber=i;
+		}
+
+		clrscr();
+		gotoxy(30,14);
+		cout << "Player Number " << WinPlayerNumber + 1 << " WIN !!!" << endl;
+		getchar();
+	}
 }
 
 void GameManager::Collisions(GamePlayer* player) {
@@ -156,9 +168,9 @@ GlobalConsts::MapObjectType GameManager::TakeMapObject(const Point& position) {
 
 GameManager::~GameManager(){
 	objects.clear(); //run items destructors.
-	
+
 	delete playerArr; //playerArr - copy elements from Object vector, don't need to trigger elements destructors.
-	
+
 
 	while (!addObj.empty()) {
 		GameObj* item = addObj.front();

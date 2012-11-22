@@ -25,6 +25,9 @@ void GamePlayer::Move(GameManager* mgr) {
 		fixPoint(p);
 		bool move=!mgr->isValidPosition(p);
 
+		if (!move)
+			move = (rand() % 10 == 0);
+
 		while (move) {
 			p=GetPosition();
 			m_direction.set(rand() % 3 - 1,rand() % 3 - 1);
@@ -34,31 +37,37 @@ void GamePlayer::Move(GameManager* mgr) {
 			if ( mgr->isValidPosition(p) && GetPosition().comper(p) != 0 ) 
 				move=false;
 		}
+
 		int x=p.getX();
 		SetPosition(p);
 		m_pauseMoveRounds=PAUSE_MOVE_AFTER_MOVE;
 		Draw(mgr);
 
-		if (mgr->GetMapObject(p) != GlobalConsts::MapObjectType::Empty) {
-			switch(mgr->TakeMapObject(p)) {
-			case GlobalConsts::MapObjectType::Food:
-				break;
-			case GlobalConsts::MapObjectType::Quiver:
-				break;
-			case GlobalConsts::MapObjectType::Bomb:
-				break;
-			}
+		switch(mgr->TakeMapObject(p)) {
+		case GlobalConsts::MapObjectType::Food:
+			m_power+=ADD_POWER;
+			break;
+		case GlobalConsts::MapObjectType::Quiver:
+			m_numOfArrows+=ADD_ARROWS;
+			break;
+		case GlobalConsts::MapObjectType::Bomb:
+			m_power-=LOSE_POWER;
+			break;
 		}
+
+		HandleDeath(mgr);
 
 		if (m_pauseArrowsRounds == 0 && m_numOfArrows > 0 )
 		{
 			Point arrowPosition(GetPosition());
 			arrowPosition.set(arrowPosition.getX() + m_direction.getX(),arrowPosition.getY() + m_direction.getY());
-			mgr->createArrow(GetPosition(),m_direction);
-			m_pauseArrowsRounds = PAUSE_ARROWS_AFTER_SHOOT;
-			m_numOfArrows--;
+			if (mgr->isValidPosition(arrowPosition)) {
+				mgr->createArrow(arrowPosition,m_direction);
+				m_pauseArrowsRounds = PAUSE_ARROWS_AFTER_SHOOT;
+				--m_numOfArrows;
+			}
 		}
-		else {
+		else if ( m_pauseArrowsRounds > 0 )  {
 			m_pauseArrowsRounds--;
 		}
 	}
@@ -92,9 +101,13 @@ void GamePlayer::announceDamage(GameObj* obj,GameManager* mgr) {
 	}
 	else if ( obj->ClassType() == GameObjClassType::typeGameArrow ) {
 		m_power -= 500;
-		if (m_power <= 0) {
-			mgr->deleteObj(this);
-		}
+		HandleDeath(mgr);
+	}
+}
+
+void GamePlayer::HandleDeath(GameManager* mgr) {
+	if (m_power <= 0) {
+		mgr->deleteObj(this);
 	}
 }
 

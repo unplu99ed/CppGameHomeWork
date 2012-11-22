@@ -21,14 +21,15 @@ using namespace std;
 class GameManager {
 	
 	DisplayBoard board;
+	int alivePlayers,numOfPlayers;
 	GlobalConsts::MapObjectType matrix[GlobalConsts::MAX_HEIGHT][GlobalConsts::MAX_WIDTH];
 	vector<GameObj*> objects;
 	queue<GameObj*> addObj,delObj;
 	GamePlayer** playerArr;
-	int numOfPlayers,alivePlayers;
-	GameManager(const GameManager&);
+	
 
 	static const int SLEEPING_TIME = 50;
+	GameManager(const GameManager&);
 
 
 public :

@@ -34,11 +34,16 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 
 			gotoxy(j,i);
 
-			if (ch == 'P') {
-				//	if(legendPosition.getY()==-1 || legendPosition.getX()==-1) 
-				mgr->createPlayer(Point(j,i));
-				//	else
+			if (ch == 'P' ) {
+				if (legendPosition.comper(Point(-1,-1)) != 0 
+					&& legendPosition.getX() <= j && legendPosition.getY() <= i
+					&& legendPosition.getX()+12 >= j && legendPosition.getY()+7 >= i) {
 
+						mgr->createPlayer(mgr->GetEmptyPosition());
+				}
+				else {
+					mgr->createPlayer(Point(j,i));
+				}
 			}
 			else if (ch == 'O'){
 				if (legendPosition.comper(Point(-1,-1)) == 0 ) {
@@ -53,6 +58,7 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 			}
 		}
 	}
+	//create players in problematic position
 	reader.close();
 	LegendToMatrix(legendPosition,mgr);
 	gotoxy(0,0);
@@ -124,18 +130,7 @@ void DisplayBoard::printBoard(const GameManager* mgr){
 		for(int j=0;j<GlobalConsts::MAX_WIDTH; ++j) {
 
 			gotoxy(j,i);
-
-			switch(mgr->GetMapObject(Point(j,i))) {
-			case GlobalConsts::MapObjectType::Wall:
-				cout << (char)178;
-				break;
-			case GlobalConsts::MapObjectType::Empty:
-				cout << ' ';
-				break;
-			default:
-				cout << mgr->GetMapObject(Point(j,i));
-				break; 
-			}
+			cout << EnemToChar(mgr->GetMapObject(Point(j,i))) ;
 
 		}
 	}
