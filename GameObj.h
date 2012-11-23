@@ -6,18 +6,15 @@
 
 class GameManager;
 
-enum GameObjClassType {
-	typeGameObj,
-	typeGameArrow,
-	typeGamePlayer,
-	typeGameFood,
-	typeGameQuiver,
-	typeGameBomb
-};
+//enum GameObjClassType {
+//	typeGameObj,
+//	typeGameArrow,
+//	typeGamePlayer
+//};
 
 class GameObj {
 	Point M_MyPos;
-	const char SIMBOL_OF_OBJECT;
+	const unsigned char SIMBOL_OF_OBJECT;
 
 protected:
 
@@ -28,11 +25,13 @@ protected:
 	void fixPoint(Point& p);
 
 public:
-	enum gameobjclasstype {
+	
+	enum GameObjClassType {
 		typeGameObj,
 		typeGameArrow,
 		typeGamePlayer
 	};
+	
 	void Draw(GameManager* mgr);
 	void Undraw();
 	virtual void Move(GameManager* mgr) = 0;

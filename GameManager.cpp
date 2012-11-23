@@ -33,7 +33,7 @@ GameManager::GameManager(char* path) : board(path) {
 				delObj.pop();
 				for(vector<GameObj*>::iterator it = objects.begin(); it < objects.end(); it++) {
 					if (*it == obj) {
-						if (obj->ClassType() == GameObjClassType::typeGamePlayer) {
+						if (obj->ClassType() == GameObj::typeGamePlayer) {
 							for(int i = 0; i < numOfPlayers; ++i) {
 								if (playerArr[i] == obj) {
 									playerArr[i] = NULL;
@@ -50,15 +50,15 @@ GameManager::GameManager(char* path) : board(path) {
 			}
 
 			if(rand()%10 == 0) {
-				CreateGift(GlobalConsts::MapObjectType::Food);
+				CreateGift(GlobalConsts::Food);
 			}
 
 			if(rand()%5 == 0) {
-				CreateGift(GlobalConsts::MapObjectType::Quiver);
+				CreateGift(GlobalConsts::Quiver);
 			}
 
 			if(rand()%20 == 0) {
-				CreateGift(GlobalConsts::MapObjectType::Bomb);
+				CreateGift(GlobalConsts::Bomb);
 			}
 
 			for(int i=0; i < numOfPlayers; ++i) {
@@ -118,8 +118,8 @@ void GameManager::deleteObj(GameObj* arrow){
 
 bool GameManager::isValidPosition(const Point& position) {
 
-	if (matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Wall ||
-		matrix[position.getY()][position.getX()] == GlobalConsts::MapObjectType::Legened ) {
+	if (matrix[position.getY()][position.getX()] == GlobalConsts::Wall ||
+		matrix[position.getY()][position.getX()] == GlobalConsts::Legened ) {
 			return false;
 	}
 	else {
@@ -162,7 +162,7 @@ GlobalConsts::MapObjectType GameManager::GetMapObject(const Point& position) con
 
 GlobalConsts::MapObjectType GameManager::TakeMapObject(const Point& position) {
 	GlobalConsts::MapObjectType result = GetMapObject(position);
-	matrix[position.getY()][position.getX()] = GlobalConsts::MapObjectType::Empty;
+	matrix[position.getY()][position.getX()] = GlobalConsts::Empty;
 	return result;
 }
 

@@ -20,6 +20,6 @@ void GameArrow::Move(GameManager* mgr) {
 	}
 }
 
-GameObjClassType GameArrow::ClassType() {
-	return GameObjClassType::typeGameArrow;
+GameObj::GameObjClassType GameArrow::ClassType() {
+	return GameObj::typeGameArrow;
 }

@@ -8,11 +8,11 @@ DisplayBoard::DisplayBoard(char* path) : legendPosition(-1,-1) {
 GlobalConsts::MapObjectType DisplayBoard::CastToMapObjectType(char ch) {
 	switch(ch) {
 	case 'W':
-		return GlobalConsts::MapObjectType::Wall;
+		return GlobalConsts::Wall;
 		break;
 	case ' ':
 	default:
-		return GlobalConsts::MapObjectType::Empty;
+		return GlobalConsts::Empty;
 	}
 }
 
@@ -70,18 +70,18 @@ void DisplayBoard::LegendToMatrix(const Point& position,GameManager* mgr){
 		legendPosition.set(67,17);
 
 	for(i=0;i<12;i++){ //Print Walls around the legend
-		mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()),GlobalConsts::MapObjectType::Wall);
-		mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()+6),GlobalConsts::MapObjectType::Wall);
+		mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()),GlobalConsts::Wall);
+		mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()+6),GlobalConsts::Wall);
 	}
 
 	for(i=1;i<6;i++){ //Print Walls around the legend
-		mgr->SetMapObject(Point(legendPosition.getX(),legendPosition.getY()+i),GlobalConsts::MapObjectType::Wall);
-		mgr->SetMapObject(Point(legendPosition.getX()+11,legendPosition.getY()+i),GlobalConsts::MapObjectType::Wall);
+		mgr->SetMapObject(Point(legendPosition.getX(),legendPosition.getY()+i),GlobalConsts::Wall);
+		mgr->SetMapObject(Point(legendPosition.getX()+11,legendPosition.getY()+i),GlobalConsts::Wall);
 	}
 
 	for(i=1;i<11;i++) { //set legend place on the matrix
 		for(j=1;j<6;j++) {
-			mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()+j),GlobalConsts::MapObjectType::Legened);
+			mgr->SetMapObject(Point(legendPosition.getX()+i,legendPosition.getY()+j),GlobalConsts::Legened);
 		}
 	}
 
@@ -145,9 +145,6 @@ void DisplayBoard::printObject(const Point& position,GlobalConsts::MapObjectType
 char DisplayBoard:: EnemToChar(int ToReturn)
 {
 	switch(ToReturn){
-	case GlobalConsts::Empty :
-		return ' ';
-		break;
 	case GlobalConsts::Wall :
 		return (char)178;
 		break;
@@ -160,5 +157,10 @@ char DisplayBoard:: EnemToChar(int ToReturn)
 	case GlobalConsts::Quiver :
 		return (char)27 ;
 		break;
+	case GlobalConsts::Empty :
+	default:
+		return ' ';
+		break;
+
 	}
 }

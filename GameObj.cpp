@@ -39,8 +39,8 @@ void GameObj::SetPosition(Point pos){
 	M_MyPos = pos; 
 }
 
-GameObjClassType GameObj::ClassType() {
-	return GameObjClassType::typeGameObj;
+GameObj::GameObjClassType GameObj::ClassType() {
+	return GameObj::typeGameObj;
 }
 
 

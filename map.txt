@@ -9,11 +9,11 @@ WWW     WWWW        WP                                     W
         W           WWWWWWWWWWWWWWWWWWWW WWWWWWWWWWWWWWWWWWW                   
         W                                                                      
         W                                                                      
- W      W                                                                      
-        W                                                      P               
+ W      W                                                             P        
         W                                                                      
-        W         O  P                                                         
-        W           P                                                          
+        W                                                                      
+        W         O                                                            
+        W                                                                      
                                                                                
                                                                                
                                                                                

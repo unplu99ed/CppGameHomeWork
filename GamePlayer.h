@@ -15,10 +15,10 @@ class GamePlayer : public GameObj  {
 	//******** initiate values ******
 
 	static const int START_POWER=1000;
-	static const int NUMBER_OF_ARROWS=99;
+	static const int NUMBER_OF_ARROWS=6;
 	static const int PAUSE_MOVE_AFTER_MOVE=1;
 	static const int PAUSE_ARROWS_AFTER_SHOOT=3;
-	static const char PLAYER_SYMBOL = 232;
+	static const unsigned char PLAYER_SYMBOL = 232;
 
 public:
 	enum HIT_BY_PLAYER_POWER {

@@ -5,7 +5,7 @@
 
 class GameArrow : public GameObj  {
 	Point m_direction;
-	static const char ARROW_SYMBOL = (char)29;
+	static const unsigned char ARROW_SYMBOL = (char)29;
 public:
 	
 	//Constractors
