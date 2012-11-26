@@ -2,7 +2,7 @@
 #include "DisplayBoard.h"
 
 GameManager::GameManager(char* path) : board(path) {
-
+	srand((unsigned)time(0));
 	board.loadMap(this);
 	numOfPlayers = alivePlayers = objects.size();
 	playerArr = new GamePlayer*[numOfPlayers];
