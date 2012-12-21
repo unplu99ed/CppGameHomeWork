@@ -3,8 +3,6 @@
 
 GameManager::GameManager(char* path) : board(path) {
 
-	srand((unsigned)time(0)); //resets the random function
-
 	board.loadMap(this); // load map from file.
 
 	numOfPlayers = alivePlayers = objects.size(); //init number of players.
@@ -17,99 +15,7 @@ GameManager::GameManager(char* path) : board(path) {
 		i++;
 	}
 
-	bool con = true;
-	while(con) { //check if number of players is less or equal to 1 or the user want to exit
-
-		while( (!kbhit() || getch()!=27) && alivePlayers > 1) { //run until user press esc or number of players is less or equal to 1
-
-			board.displayLegend(numOfPlayers,playerArr); // update game score board
-
-			for(vector<GameObj*>::iterator it = objects.begin(); it < objects.end(); it++) { //game round for all the moving objects
-				(*it)->Move(this);
-			}
-
-			while (!addObj.empty()) { //moving object that added in the last game round.
-				objects.push_back(addObj.front());
-				addObj.front()->Move(this);
-				addObj.pop();
-			}
-
-			while (!delObj.empty()) {//delete object that died in the last game round.
-				GameObj* obj = delObj.front();
-				delObj.pop();
-				for(vector<GameObj*>::iterator it = objects.begin(); it < objects.end(); it++) {
-					if (*it == obj) {
-						if (obj->ClassType() == GameObj::typeGamePlayer) {
-							for(int i = 0; i < numOfPlayers; ++i) {
-								if (playerArr[i] == obj) {
-									playerArr[i] = NULL;
-									--alivePlayers;
-								}
-							}
-						}
-						obj->Undraw();
-						objects.erase(it);
-						delete obj;
-						break;
-					}
-				}
-			}
-
-			//check if to add Food 
-			if(rand() % 10 == 0) {
-				CreateGift(GlobalConsts::Food);
-			}
-
-			//check if to add Quiver 
-			if(rand() % 5 == 0) {
-				CreateGift(GlobalConsts::Quiver);
-			}
-
-			//check if to add Bomb 
-			if(rand() % 20 == 0) {
-				CreateGift(GlobalConsts::Bomb);
-			}
-
-			//check Collisions
-			for(int i=0; i < numOfPlayers; ++i) {
-				Collisions(playerArr[i]);
-			}
-
-			//sleeping time in the end of the round. 
-			Sleep(SLEEPING_TIME);
-		}
-
-		//check if number of alivePlayers is less or equal to 1 
-		if (alivePlayers <= 1) {
-			con=false;
-		}
-		else {
-			//make sure that the user want to exit.
-			clrscr();
-			gotoxy(10,10);
-			cout << "Do you want to leave the game ?" << endl;
-			char ch = getch();
-			if (ch == 'y' || ch == 'Y' ) 
-				con=false;
-			else
-				board.printBoard(this);
-		}
-	}
-	//if the number of alivePlayers is less or equal to 1 declare on the winner.
-	if (alivePlayers <= 1) {
-		int WinPlayerNumber=-1;
-		for(int i=0; i< numOfPlayers; ++i) {
-			if ( playerArr[i] != NULL )
-				WinPlayerNumber=i;
-		}
-
-		clrscr();
-		gotoxy(22,8);
-		cout << "Player Number " << WinPlayerNumber + 1 << " WIN !!!" << endl;
-		
-		gotoxy(22,9);
-		getchar();
-	}
+	
 }
 
 //Collisions: check Collisions between moving objects
@@ -216,4 +122,102 @@ void GameManager::CreateGift(GlobalConsts::MapObjectType type) {
 	Point place = GetEmptyPosition();
 	matrix[place.getY()][place.getX()]=type;
 	board.printObject(Point(place.getX(),place.getY()),type);
+}
+
+void GameManager::run() {
+	srand((unsigned)time(0)); //resets the random function
+	
+	bool con = true;
+	while(con) { //check if number of players is less or equal to 1 or the user want to exit
+
+		while( (!kbhit() || getch()!=27) && alivePlayers > 1) { //run until user press esc or number of players is less or equal to 1
+
+			board.displayLegend(numOfPlayers,playerArr); // update game score board
+
+			for(vector<GameObj*>::iterator it = objects.begin(); it < objects.end(); it++) { //game round for all the moving objects
+				(*it)->Move(this);
+			}
+
+			while (!addObj.empty()) { //moving object that added in the last game round.
+				objects.push_back(addObj.front());
+				addObj.front()->Move(this);
+				addObj.pop();
+			}
+
+			while (!delObj.empty()) {//delete object that died in the last game round.
+				GameObj* obj = delObj.front();
+				delObj.pop();
+				for(vector<GameObj*>::iterator it = objects.begin(); it < objects.end(); it++) {
+					if (*it == obj) {
+						if (obj->ClassType() == GameObj::typeGamePlayer) {
+							for(int i = 0; i < numOfPlayers; ++i) {
+								if (playerArr[i] == obj) {
+									playerArr[i] = NULL;
+									--alivePlayers;
+								}
+							}
+						}
+						obj->Undraw();
+						objects.erase(it);
+						delete obj;
+						break;
+					}
+				}
+			}
+
+			//check if to add Food 
+			if(rand() % 10 == 0) {
+				CreateGift(GlobalConsts::Food);
+			}
+
+			//check if to add Quiver 
+			if(rand() % 5 == 0) {
+				CreateGift(GlobalConsts::Quiver);
+			}
+
+			//check if to add Bomb 
+			if(rand() % 20 == 0) {
+				CreateGift(GlobalConsts::Bomb);
+			}
+
+			//check Collisions
+			for(int i=0; i < numOfPlayers; ++i) {
+				Collisions(playerArr[i]);
+			}
+
+			//sleeping time in the end of the round. 
+			Sleep(SLEEPING_TIME);
+		}
+
+		//check if number of alivePlayers is less or equal to 1 
+		if (alivePlayers <= 1) {
+			con=false;
+		}
+		else {
+			//make sure that the user want to exit.
+			clrscr();
+			gotoxy(10,10);
+			cout << "Do you want to leave the game ?" << endl;
+			char ch = getch();
+			if (ch == 'y' || ch == 'Y' ) 
+				con=false;
+			else
+				board.printBoard(this);
+		}
+	}
+	//if the number of alivePlayers is less or equal to 1 declare on the winner.
+	if (alivePlayers <= 1) {
+		int WinPlayerNumber=-1;
+		for(int i=0; i< numOfPlayers; ++i) {
+			if ( playerArr[i] != NULL )
+				WinPlayerNumber=i;
+		}
+
+		clrscr();
+		gotoxy(22,8);
+		cout << "Player Number " << WinPlayerNumber + 1 << " WIN !!!" << endl;
+		
+		gotoxy(22,9);
+		getchar();
+	}
 }

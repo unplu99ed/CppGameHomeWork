@@ -24,6 +24,9 @@ class DisplayBoard {
 	Point legendPosition;
 
 public:
+	static const int MIN_NUM_PLAYERS=1;
+	static const int NUM_HUMAN_PLAYERS=1;
+	static const int MAX_COMPUTER_PLAYERS=2;	
 	//DisplayBoard: consractor
 	DisplayBoard(char*);
 	//LegendToMatrix: set the walls and the starting position of the legend at the matrix

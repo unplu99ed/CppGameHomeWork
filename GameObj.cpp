@@ -37,10 +37,10 @@ void GameObj::SetPosition(Point pos){
 	M_MyPos = pos; 
 }
 
-//ClassType: return the type of the object
-GameObj::GameObjClassType GameObj::ClassType() {
-	return GameObj::typeGameObj;
-}
+////ClassType: return the type of the object
+//GameObj::GameObjClassType GameObj::ClassType() {
+//	return GameObj::typeGameObj;
+//}
 
 
 //fixPoint: if point is out of bound make it in bound

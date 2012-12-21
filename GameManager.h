@@ -43,10 +43,21 @@ class GameManager {
 	//GameManager: blocking copy contractor.
 	GameManager(const GameManager&);
 
+	//Collisions: check Collisions between moving objects
+	void Collisions(GamePlayer*);
+
+	//isCloseToPlayers: check if the point is close to a player. 
+	bool isCloseToPlayers(const Point&);
+
+	//CreateGift: set a new gift (Food,Quiver,Bomb) at random valid position.
+	void CreateGift(GlobalConsts::MapObjectType);
 
 public :
 	GameManager(char*);
 	~GameManager();
+
+	//run: start and handle the game.
+	void run();
 	
 	//createPlayer: create game player.
 	void createPlayer(const Point&);
@@ -60,9 +71,6 @@ public :
 	//isValidPosition: check if the new position is valid (the new position is on empty space or gift).
 	bool isValidPosition(const Point&);
 
-	//Collisions: check Collisions between moving objects
-	void Collisions(GamePlayer*);
-
 	//GetEmptyPosition: get empty and valid position ( only empty places).
 	Point GetEmptyPosition();
 
@@ -74,12 +82,6 @@ public :
 
 	//TakeMapObject: return the type of element of this position and erase it with empty position.
 	GlobalConsts::MapObjectType TakeMapObject(const Point&);
-
-	//isCloseToPlayers: check if the point is close to a player. 
-	bool isCloseToPlayers(const Point&);
-
-	//CreateGift: set a new gift (Food,Quiver,Bomb) at random valid position.
-	void CreateGift(GlobalConsts::MapObjectType);
 
 	//DisplayMapObject: draw a static object on the screen
 	void DisplayMapObject(const Point&);

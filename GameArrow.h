@@ -19,7 +19,7 @@ public:
 	GameArrow(int, int, const Point&); 
 	
 	//Move: Performs game action for Arrow.
-	void Move(GameManager*); 
+	virtual void Move(GameManager*); 
 	//GameObjClassType: return GameObjClassType::typeGameArrow.
 	virtual GameObjClassType ClassType();
 };

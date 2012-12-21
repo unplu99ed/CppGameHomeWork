@@ -46,7 +46,7 @@ public:
 	Point GetPosition();
 	
 	//ClassType: return the type of the object
-	virtual GameObjClassType ClassType();
+	virtual GameObjClassType ClassType()=0;
 };
 
 

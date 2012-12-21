@@ -20,8 +20,14 @@ GlobalConsts::MapObjectType DisplayBoard::CastToMapObjectType(char ch) {
 
 //loadMap: load the map from the text file
 void DisplayBoard::loadMap(GameManager* mgr) {
+	Point for_player;
+	int num_of_hp=0,num_of_cp=0;
 	ifstream reader;
 	reader.open(m_filePath);
+	if(!reader){
+		cout<<" File opening fail \n\n!!!";
+		system("pause");
+	}
 	int i,j;
 
 	for(i=0;i <GlobalConsts::MAX_HEIGHT; ++i) {
@@ -37,15 +43,33 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 
 			gotoxy(j,i);
 
-			if (ch == 'P' ) {
-				if (legendPosition.comper(Point(-1,-1)) != 0 
-					&& legendPosition.getX() <= j && legendPosition.getY() <= i
-					&& legendPosition.getX()+12 >= j && legendPosition.getY()+7 >= i) {
+			if (ch == 'H' ) {
+				num_of_hp++;
+				if(num_of_hp<=1){
+					if (legendPosition.comper(Point(-1,-1)) != 0 
+						&& legendPosition.getX() <= j && legendPosition.getY() <= i
+						&& legendPosition.getX()+12 >= j && legendPosition.getY()+7 >= i) {
 
-						mgr->createPlayer(mgr->GetEmptyPosition());
+							mgr->createPlayer(mgr->GetEmptyPosition());
+					}
+					else {
+						mgr->createPlayer(Point(j,i));
+					}
 				}
-				else {
-					mgr->createPlayer(Point(j,i));
+			}
+
+			if (ch == 'P' ) {
+				num_of_cp++;
+				if(num_of_cp<=2){
+					if (legendPosition.comper(Point(-1,-1)) != 0 
+						&& legendPosition.getX() <= j && legendPosition.getY() <= i
+						&& legendPosition.getX()+12 >= j && legendPosition.getY()+7 >= i) {
+
+							mgr->createPlayer(mgr->GetEmptyPosition());
+					}
+					else {
+						mgr->createPlayer(Point(j,i));
+					}
 				}
 			}
 			else if (ch == 'O'){
@@ -61,8 +85,26 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 			}
 		}
 	}
+	
 	//create players in problematic position
 	reader.close();
+	if(num_of_hp<NUM_HUMAN_PLAYERS){
+		clrscr();
+		cout<<"No human players \n\n";
+		getch();
+	}
+	
+	if(num_of_cp<MIN_NUM_PLAYERS){
+		while(num_of_cp<MIN_NUM_PLAYERS) {
+			for_player=mgr->GetEmptyPosition();
+			/*if ( legendPosition.comper(Point(-1,-1)) != 0 && legendPosition.getX() <= for_player.getY() && legendPosition.getY() <= for_player.getX()
+			&& legendPosition.getX()+12 >= for_player.getY() && legendPosition.getY()+7 >= for_player.getX()) { */
+			mgr->createPlayer(for_player);
+			num_of_cp++;
+			/*}*/	
+		}
+	}
+
 	LegendToMatrix(legendPosition,mgr);
 	gotoxy(0,0);
 }
