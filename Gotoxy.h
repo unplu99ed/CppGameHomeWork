@@ -12,7 +12,10 @@ using namespace std;
 #include <windows.h>
 #include <process.h>
 
-void gotoxy(int, int); // prototype
-void clrscr(); // prototype
+//gotoxy: move the screen Cursor to the position of (x,y) -- requires windows.h
+void gotoxy(int, int);
+
+//Clear screan -- requires windows.h
+void clrscr(); 
 
 #endif

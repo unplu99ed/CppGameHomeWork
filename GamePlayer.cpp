@@ -1,6 +1,7 @@
 #include "GamePlayer.h"
 #include "GameManager.h"
 
+//initBaseValues: set the first values of the player's data members
 void GamePlayer::initBaseValues() {
 	m_power=START_POWER;
 	m_numOfArrows=NUMBER_OF_ARROWS;
@@ -8,27 +9,30 @@ void GamePlayer::initBaseValues() {
 	m_pauseArrowsRounds=0;
 	m_direction.set(1,1);
 }
+//Constractors
 GamePlayer::GamePlayer(Point position): GameObj(position,PLAYER_SYMBOL) {
-	initBaseValues();
+	initBaseValues(); //init values
 }
+
 GamePlayer::GamePlayer(int x,int y):GameObj(x,y,PLAYER_SYMBOL) {
-	initBaseValues();
+	initBaseValues(); //init values
 }
 
+//Move: Performs game round for Player.
 void GamePlayer::Move(GameManager* mgr) {
-	if (m_pauseMoveRounds == 0) {
+	if (m_pauseMoveRounds == 0) { // check if player can move
+		
 		Undraw();
-		Point p;
 
-		p = GetPosition();
-		p.set(p.getX()+m_direction.getX(),p.getY()+m_direction.getY());
-		fixPoint(p);
+		Point p = GetPosition();
+		p.set(p.getX()+m_direction.getX(),p.getY()+m_direction.getY()); // set new postion
+		fixPoint(p); //if needed fix the position of the point
 		bool move=!mgr->isValidPosition(p);
 
-		if (!move)
+		if (!move) // in case the new position is valid,  do change of direction randomly
 			move = (rand() % 10 == 0);
 
-		while (move) {
+		while (move) { // if new poisiton is not valid get valid new position.
 			p=GetPosition();
 			m_direction.set(rand() % 3 - 1,rand() % 3 - 1);
 			p.set(p.getX()+m_direction.getX(),p.getY()+m_direction.getY());
@@ -38,12 +42,13 @@ void GamePlayer::Move(GameManager* mgr) {
 				move=false;
 		}
 
-		int x=p.getX();
-		SetPosition(p);
-		m_pauseMoveRounds=PAUSE_MOVE_AFTER_MOVE;
+		SetPosition(p); //set the new position
+
+		m_pauseMoveRounds=PAUSE_MOVE_AFTER_MOVE; //update waiting rounds
+
 		Draw(mgr);
 
-		switch(mgr->TakeMapObject(p)) {
+		switch(mgr->TakeMapObject(p)) { // check if payer is on gift
 		case GlobalConsts::Food:
 			m_power+=ADD_POWER;
 			break;
@@ -55,9 +60,9 @@ void GamePlayer::Move(GameManager* mgr) {
 			break;
 		}
 
-		HandleDeath(mgr);
+		HandleDeath(mgr); // check death
 
-		if (m_pauseArrowsRounds == 0 && m_numOfArrows > 0 )
+		if (m_pauseArrowsRounds == 0 && m_numOfArrows > 0 ) // handle shooting arrow
 		{
 			Point arrowPosition(GetPosition());
 			arrowPosition.set(arrowPosition.getX() + m_direction.getX(),arrowPosition.getY() + m_direction.getY());
@@ -75,14 +80,15 @@ void GamePlayer::Move(GameManager* mgr) {
 		--m_pauseMoveRounds;
 	}
 }
-
+//getPower: return the power of the player
 int GamePlayer::getPower(){
 	return m_power;
 }
+//getNumberOfArrows: return the number of arrows of the player
 int GamePlayer::getNumberOfArrows(){
 	return m_numOfArrows;
 }
-
+//announceDamage: announce to the player that he had injured
 void GamePlayer::announceDamage(GameObj* obj,GameManager* mgr) {
 	if ( obj->ClassType() == typeGamePlayer ) {
 		GamePlayer* otherPlayer = (GamePlayer*)obj;
@@ -104,17 +110,17 @@ void GamePlayer::announceDamage(GameObj* obj,GameManager* mgr) {
 		HandleDeath(mgr);
 	}
 }
-
+//HandleDeath: handle the situation that player dead 
 void GamePlayer::HandleDeath(GameManager* mgr) {
 	if (m_power <= 0) {
 		mgr->deleteObj(this);
 	}
 }
-
+//GameObjClassType: return GameObjClassType::typeGamePlayer
 GameObj::GameObjClassType GamePlayer::ClassType() {
 	return GameObj::typeGamePlayer;
 }
-
+//HitByPlayer: handle situation that there is more then one player at the same location
 void GamePlayer::HitByPlayer(GamePlayer::HIT_BY_PLAYER_POWER otherPlayer,GameManager* mgr) {
 	
 	m_power -= otherPlayer;

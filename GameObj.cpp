@@ -2,26 +2,22 @@
 #include "GlobalVariable.h"
 #include "GameManager.h"
 
-/*GameObj::GameObj() : SIMBOL_OF_OBJECT((char) 1) {
-	this->Draw();
-}*/
-
 GameObj::GameObj(char symbol) : SIMBOL_OF_OBJECT(symbol) { 
-	//this->Draw();
 }
 
 GameObj::GameObj(Point position,char simbol) : M_MyPos(position), SIMBOL_OF_OBJECT(simbol) { 
-	//this->Draw();
 }
 
 GameObj::GameObj(int x, int y ,char simbol) : M_MyPos(x,y), SIMBOL_OF_OBJECT(simbol) { 
-	//this->Draw();
 }
 
+//GetPosition: return the position of the object
 Point GameObj::GetPosition() { 
 	return M_MyPos; 
 }
 
+
+//Draw: Draw element on screen
 void GameObj::Draw(GameManager* mgr) { 
 	if ( mgr->isValidPosition(M_MyPos) ) {
 		gotoxy(M_MyPos.getX(),M_MyPos.getY());
@@ -30,20 +26,24 @@ void GameObj::Draw(GameManager* mgr) {
 }
 
 
+//Undraw: undraw element on screen
 void GameObj::Undraw() {
 	gotoxy(M_MyPos.getX(),M_MyPos.getY());
 	cout << ' ' ;
 }
 
+//SetPosition: set new object position
 void GameObj::SetPosition(Point pos){
 	M_MyPos = pos; 
 }
 
+//ClassType: return the type of the object
 GameObj::GameObjClassType GameObj::ClassType() {
 	return GameObj::typeGameObj;
 }
 
 
+//fixPoint: if point is out of bound make it in bound
 void GameObj::fixPoint(Point& p) {
 
 	if ( p.getX() == GlobalConsts::MAX_WIDTH)

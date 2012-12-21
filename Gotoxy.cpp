@@ -1,6 +1,6 @@
 #include "Gotoxy.h"
 
-// function definition -- requires windows.h
+//gotoxy: move the screen Cursor to the position of (x,y) -- requires windows.h
 void gotoxy(int x, int y)
 {
 	HANDLE hConsoleOutput;
@@ -12,7 +12,7 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(hConsoleOutput,dwCursorPosition);
 }
 
-// function definition -- requires process.h
+//clrscr: Clear screan -- requires windows.h
 void clrscr()
 {
 	system("cls");

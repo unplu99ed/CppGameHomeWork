@@ -1,10 +1,12 @@
 #include "DisplayBoard.h"
 #include "GameManager.h"
 
+//consractor
 DisplayBoard::DisplayBoard(char* path) : legendPosition(-1,-1) {
 	m_filePath = path;
 }
 
+//CastToMapObjectType: get char and return object type
 GlobalConsts::MapObjectType DisplayBoard::CastToMapObjectType(char ch) {
 	switch(ch) {
 	case 'W':
@@ -16,6 +18,7 @@ GlobalConsts::MapObjectType DisplayBoard::CastToMapObjectType(char ch) {
 	}
 }
 
+//loadMap: load the map from the text file
 void DisplayBoard::loadMap(GameManager* mgr) {
 	ifstream reader;
 	reader.open(m_filePath);
@@ -64,6 +67,7 @@ void DisplayBoard::loadMap(GameManager* mgr) {
 	gotoxy(0,0);
 }
 
+//LegendToMatrix: set the walls and the starting position of the legend at the matrix
 void DisplayBoard::LegendToMatrix(const Point& position,GameManager* mgr){
 	int i,j;
 	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_HEIGHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_WIDTH))
@@ -100,7 +104,7 @@ void DisplayBoard::LegendToMatrix(const Point& position,GameManager* mgr){
 
 }
 
-
+//displayLegend: manage the legend of the matrix and update it real time
 void DisplayBoard::displayLegend(int n,GamePlayer** playerArr ) {
 
 	if((legendPosition.getY()>18 && legendPosition.getY()<=GlobalConsts::MAX_HEIGHT) || ( legendPosition.getX()>68 && legendPosition.getX()<=GlobalConsts::MAX_WIDTH))
@@ -125,6 +129,7 @@ void DisplayBoard::displayLegend(int n,GamePlayer** playerArr ) {
 
 }
 
+//printBoard: responsible of printing our static objects and our dinamic objects at real time
 void DisplayBoard::printBoard(const GameManager* mgr){
 	for(int i=0;i <GlobalConsts::MAX_HEIGHT; ++i) {
 		for(int j=0;j<GlobalConsts::MAX_WIDTH; ++j) {
@@ -136,13 +141,14 @@ void DisplayBoard::printBoard(const GameManager* mgr){
 	}
 }
 
-
+//printObject: get an object and it's position and print the object at the console 
 void DisplayBoard::printObject(const Point& position,GlobalConsts::MapObjectType obj){
 	gotoxy(position.getX(),position.getY());
 	cout <<EnemToChar(obj) ;
 }
 
-char DisplayBoard:: EnemToChar(int ToReturn)
+//EnemToChar: get enum that represents an object and return it's char 
+char DisplayBoard:: EnemToChar(GlobalConsts::MapObjectType ToReturn)
 {
 	switch(ToReturn){
 	case GlobalConsts::Wall :

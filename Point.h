@@ -17,16 +17,20 @@ public:
 	Point(const Point& p);
 	Point();
 
-
-	void set(int x,int y); // set the x and y of the class
+	// set the x and y of the class
+	void set(int x,int y); 
 	
-	int getX() const; //return the x position
+	//return the x position
+	int getX() const; 
 	
-	int getY() const; //return the y position
+	//return the y position
+	int getY() const; 
 	
-	int comper(Point); // return the distance between the points
+	// return the distance between the points
+	int comper(Point); 
 	
-	void generateNewPosition(); // randomize values for x and y.
+	// randomize values for x and y.
+	void generateNewPosition(); 
 };
 
 #endif
